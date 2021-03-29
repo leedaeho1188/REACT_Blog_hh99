@@ -1,47 +1,45 @@
-import React from "react"
+import React, {useState} from "react"
+
+import LoginModal from "./LoginModal"
+import SignupModal from "./SignupModal"
+
 import {Grid, Text, Button} from "../elements"
 import styled from "styled-components";
 
 
 const Header = (props) => {
-  // return(
-  //   <React.Fragment>
-  //     <Grid padding="8px 16px" margin="auto" display="flex">
-  //       <Grid>
-  //         <Button 
-  //           text="hh99_Log "
-  //           size='20px' 
-  //           _onClick={()=>{
-  //             // props.history.push("/")
-  //           }}></Button>
-  //       </Grid>
-  //       <Grid justify="right" diplay="flex">
-  //         <Button
-  //           text="로그인"
-  //           _onClick={() => {
-  //             // props.history.push("/login")
-  //           }}
-  //         ></Button>
-  //         <Button
-  //           text="회원가입"
-  //           _onCLick={() => {
+  const [l_status, isLoginOpen] = useState(false)
+  const [S_status, isSignupOpen] = useState(false)
 
-  //           }}
-  //         ></Button>  
-  //       </Grid>
-  //     </Grid>
-  //   </React.Fragment>
-  // )
+  const OpenLogin = () => {
+    isLoginOpen(true)
+  }
+  const CloseLogin = () => {
+    isLoginOpen(false)
+  }
+  const OpenSignup = () => {
+    isSignupOpen(true)
+  }
+  const CloseSignup = () => {
+    isSignupOpen(false)
+  }
+
 
   return(
     <React.Fragment>
       <FlexContainer>
-        <HeaderBtn>h-log</HeaderBtn>
+        <HeaderBtn>⛵ h-log</HeaderBtn>
       <div>
-        <HeaderBtn style={{marginRight : "10px"}}>로그인</HeaderBtn>
-        <HeaderBtn>회원가입</HeaderBtn>
+        <HeaderBtn onClick={() => {
+          OpenLogin()
+        }}>Login</HeaderBtn>
+        <HeaderBtn onClick={() => {
+          OpenSignup()
+        }}>Sign Up</HeaderBtn>
       </div>
       </FlexContainer>
+      <LoginModal status={l_status} close={CloseLogin}/>
+      <SignupModal status={S_status} close={CloseSignup}/>
     </React.Fragment>
   )
 }
@@ -49,7 +47,7 @@ const Header = (props) => {
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 10px 20px;
   width: 100vw;
   margin: auto;
   box-sizing: border-box;
@@ -63,7 +61,10 @@ const HeaderBtn = styled.button`
   outline: none;
   cursor: pointer;
   font-size: 20px;
-
+  margin-right: 10px;
+  &:hover {
+    font-weight:600;
+  };
 `
 
 
