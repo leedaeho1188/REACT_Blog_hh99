@@ -83,12 +83,76 @@ const addPostFB = (post) => {
   }
 }
 
+const getPostFB = (start = null, size = 3) => {
+  return function (dispatch, getState) {
+    let _paging = getState().post.paging;
+    if(_paging.start && !_paging.next){
+      return;
+    }
 
+    dispatch(loading(true))
+    const postDB = firestore.collection("post");
+
+    let query = postDB.orderBy("insert_dt", "desc")
+    
+    if(start){
+      query = query.startAt(start);
+    }
+
+    query.limit(start + 1).get().then((docs) => {
+      let post_list = [];
+      console.log(docs)
+      let paging = {
+        start: docs.docs[0],
+        next: docs.docs.length === size+1? docs.docs[docs.docs.length -1] : null,
+        size: size,
+      }
+      docs.forEach((doc) => {
+        let _post = doc.data();
+        let post = Object.keys(_post).reduce(
+          (acc, cur) => {
+            if (cur.indexOf("user_") !== -1){
+              return {
+                ...acc,
+                user_info: { ...acc.user_info, [cur]: _post[cur] },
+              };
+            }
+            return {...acc, [cur]: _post[cur]};
+          },
+          { id: doc.id, user_info: {} }
+        );
+        
+        post_list.push(post);
+      })
+      post_list.pop();
+
+      console.log(post_list);
+
+      dispatch(setPost(post_list, paging))
+      
+    })
+  }
+}
 
 export default handleActions(
-  {
+  { 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
       draft.list.unshift(action.payload.post)
+    }),
+    [SET_POST]: (state, action) => produce(state, (draft) => {
+      draft.list.push(...action.payload.post_list);
+      draft.list = draft.list.reduce((acc, cur) => {
+        if(acc.findIndex(a => a.id === cur.id) === -1){
+          return [...acc, cur];
+        }else{
+          acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+          return acc;
+        }
+      }, []);
+      if(action.payload.paging){
+        draft.paging = action.payload.paging;
+      }
+      draft.is_loading = false;
     })
   },
   initialState
@@ -98,7 +162,8 @@ const actionCreators = {
   setPost,
   addPost,
   editPost,
-  addPostFB
+  addPostFB,
+  getPostFB,
 }
 
 export {actionCreators}

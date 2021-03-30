@@ -21,7 +21,9 @@ const PostList = (props) => {
   return (
     <React.Fragment>
       {post_list.map((p, idx) => {
-        <Post {...p} />
+        return(
+          <Post {...p} />
+        )
       })}
     </React.Fragment>
   )

@@ -14,19 +14,19 @@ const Post = (props) => {
         <PostTop>
           <div style={{display: "flex"}}>
             <ProfileImg src={user_profile}/>
-            <UserName>{user_name}</UserName>
+            <UserName>{props.user_info.user_name}</UserName>
           </div>
-          <p>{insert_dt}</p>
+          <p>{props.insert_dt}</p>
         </PostTop>
-        <PostImg src={image_url}/>
+        <PostImg src={props.image_url}/>
         <PostBottom>
           <FormControlLabel
           control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
           style={{marginLeft: "8px"}}/>
           <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
         </PostBottom>
-        <PostLink href={project_url} target="_blank">REACT_Calendar</PostLink>
-        <Contents>{contents}</Contents>
+        <PostLink href={props.url} target="_blank">{props.name}</PostLink>
+        <Contents>{props.contents}</Contents>
       </PostContainer>
     </React.Fragment>
   )
