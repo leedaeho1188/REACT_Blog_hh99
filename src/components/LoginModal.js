@@ -3,9 +3,12 @@ import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
-import {setCookie, deleteCookie} from '../shared/Cookie'
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { emailCheck } from "../shared/common";
 
 const LoginModal = ({status, close}) => {
+  const dispatch = useDispatch();
   const [id, setId] = useState('')
   const [pwd, setPwd] = useState('')
 
@@ -18,8 +21,16 @@ const LoginModal = ({status, close}) => {
   }
 
   const login = () => {
-    setCookie("user_id", id, 3);
-    setCookie("user_psw", pwd, 3);
+    if(id === "" || pwd === ""){
+      window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+      return;
+    }
+    if(!emailCheck(id)){
+      window.alert("이메일 형식이 맞지 않습니다!");
+      return;
+    }
+    dispatch(userActions.loginFB(id, pwd))
+    close()
   }
 
 

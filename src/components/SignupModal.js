@@ -1,10 +1,52 @@
-import React from 'react'
+import React, {useState} from 'react'
+
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 
+import {useDispatch} from 'react-redux'
+import { emailCheck } from "../shared/common"
+import { actionCreators as userActions } from "../redux/modules/user";
+
 const SignupModal = ({status, close}) => {
+  const dispatch = useDispatch();
+  const [id, setId] = useState('')
+  const [pwd, setPwd] = useState('')
+  const [pwdConfirm, setConfirmedPwd] = useState('') 
+  const [user_name, setName] = useState('')
+  
+  const submitId = (e) => {
+    setId(e.target.value)
+  }
+  const submitName = (e) => {
+    setName(e.target.value)
+  }
+  const submitPwd = (e) => {
+    setPwd(e.target.value)
+  }
+  const submitConfirmedPwd = (e) => {
+    setConfirmedPwd(e.target.value)
+  }
+
+  const signup = () => {
+    if (id === "" || pwd === "" || user_name === "") {
+      window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
+      return;
+    }
+    if(!emailCheck(id)){
+      window.alert('이메일 형식이 맞지 않습니다!');
+      return;
+    }
+    if (pwd !== pwdConfirm){
+      window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+      return;
+    }
+    
+    dispatch(userActions.signupFB(id, pwd, user_name))
+    close()
+  }
+
   return(
     <>
     {status ? (
@@ -16,25 +58,29 @@ const SignupModal = ({status, close}) => {
             id="standard-password-input"
             label="Email Address"
             type="text"
+            onChange={submitId}
           />
           <TextField
             id="standard-password-input"
             label="이름"
             type="text"
+            onChange={submitName}
           />
           <TextField
             id="standard-password-input"
             label="Password"
-            type="text"
+            type="password"
             autoComplete="current-password"
+            onChange={submitPwd}
           />
           <TextField
             id="standard-password-input"
             label="Confirm password"
             type="password"
             autoComplete="current-password"
+            onChange={submitConfirmedPwd}
           />
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={signup}>
             회원가입
           </Button>
           <ExitBtn onClick={close}>

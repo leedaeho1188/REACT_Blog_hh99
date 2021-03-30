@@ -3,27 +3,58 @@ import React, {useState} from "react"
 import LoginModal from "./LoginModal"
 import SignupModal from "./SignupModal"
 
-import {Grid, Text, Button} from "../elements"
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { apiKey } from "../shared/firebase";
+import { history } from "../redux/configureStore";
+
 import styled from "styled-components";
+
 
 
 const Header = (props) => {
   const [l_status, isLoginOpen] = useState(false)
   const [S_status, isSignupOpen] = useState(false)
+  const dispatch = useDispatch();
+  const is_login = useSelector((state) => state.user.is_login)
+  const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`
+  const is_session = sessionStorage.getItem(_session_key)? true : false;
+
+  console.log(is_session)
 
   const OpenLogin = () => {
     isLoginOpen(true)
   }
+  
   const CloseLogin = () => {
     isLoginOpen(false)
   }
+
   const OpenSignup = () => {
     isSignupOpen(true)
   }
   const CloseSignup = () => {
     isSignupOpen(false)
   }
-
+  if (is_login && is_session){
+    return(
+      <React.Fragment>
+        <FlexContainer>
+          <HeaderBtn onClick={() => {
+            history.push('/')
+          }} >⛵ h-log</HeaderBtn>
+        <div>
+          <HeaderBtn onClick={() => {
+            history.push("/upload")
+        }}>NEWPOST</HeaderBtn>
+          <HeaderBtn onClick={() => {
+            dispatch(userActions.logoutFB())
+          }}>LOGOUT</HeaderBtn>
+        </div>
+        </FlexContainer>
+      </React.Fragment>
+    )
+  }
 
   return(
     <React.Fragment>
