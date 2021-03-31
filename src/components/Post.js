@@ -4,9 +4,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
+import Button from '@material-ui/core/Button';
+import {history} from "../redux/configureStore"
+import {useDispatch} from "react-redux"
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Post = (props) => {
-  const {user_name, user_profile, image_url, like_cnt, contents, comment_cnt, insert_dt, is_me, project_url} = props
+  const dispatch = useDispatch()
+  const {user_profile, _onClick ,like_cnt, comment_cnt, is_me} = props
 
   return(
     <React.Fragment>
@@ -16,9 +21,24 @@ const Post = (props) => {
             <ProfileImg src={user_profile}/>
             <UserName>{props.user_info.user_name}</UserName>
           </div>
+          <div style={{display: "flex"}}>
           <p>{props.insert_dt}</p>
+            {is_me && (
+            <PostBtn>
+              <Button color="secondary" style={{fontSize: '15px'}}
+                onClick={() => {
+                  dispatch(postActions.removePostFB(props.id))
+                }}>
+                삭제
+              </Button>
+              <Button color="primary" style={{fontSize: '15px'}}>
+                수정
+              </Button>
+              </PostBtn>
+              )}
+          </div>
         </PostTop>
-        <PostImg src={props.image_url}/>
+        <PostImg src={props.image_url} onClick={_onClick} />
         <PostBottom>
           <FormControlLabel
           control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
@@ -42,6 +62,7 @@ Post.defaultProps = {
   insert_dt: "2021-02-27 10:00:00",
   is_me: false,
   like_cnt: 5,
+  _onClick: () => {},
 };
 
 
@@ -55,6 +76,7 @@ const PostContainer = styled.div`
   margin-top: 50px;
   margin-bottom: 30px;
   border-radius: 14px;
+  padding-bottom : 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 2px 5px rgba(0,0,0,0.24);
 `
 
@@ -84,6 +106,7 @@ const PostImg = styled.img`
   width: 100%;
   height: 500px;
   margin-bottom: 10px;
+  cursor: pointer;
 `
 
 const PostLink = styled.a`
@@ -102,6 +125,13 @@ const ProfileImg = styled.img`
   border-radius: 16px;
   height: 32px;
   background-size: cover;
+`
+
+const PostBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  width:50%;
+  margin: auto;
 `
 
 export default Post;

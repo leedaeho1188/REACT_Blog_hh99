@@ -6,13 +6,16 @@ import moment from "moment";
 import { history } from "../configureStore"
 import { actionCreators as imageActions } from "./image";
 
+
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
+const REMOVE_POST = "REMOVE_POST";
 const EDIT_POST = "EDIT_POST";
 const LOADING = "LOADING";
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({ post_list, paging }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const removePost = createAction(REMOVE_POST, (id) => ({ id }))
 const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
@@ -99,9 +102,9 @@ const getPostFB = (start = null, size = 3) => {
       query = query.startAt(start);
     }
 
-    query.limit(start + 1).get().then((docs) => {
+    query.limit(size + 1).get().then((docs) => {
       let post_list = [];
-      console.log(docs)
+
       let paging = {
         start: docs.docs[0],
         next: docs.docs.length === size+1? docs.docs[docs.docs.length -1] : null,
@@ -124,13 +127,50 @@ const getPostFB = (start = null, size = 3) => {
         
         post_list.push(post);
       })
-      post_list.pop();
+      if(post_list.length > size){
+        post_list.pop();
+      }
 
       console.log(post_list);
 
       dispatch(setPost(post_list, paging))
       
     })
+  }
+}
+
+const getOnePostFB = (id) => {
+  return function(dispatch) {
+    const postDB = firestore.collection("post");
+    postDB.doc(id).get().then((doc)=> {
+      let _post = doc.data();
+      if(!_post){
+        return
+      }
+      let post = Object.keys(_post).reduce(
+        (acc, cur) => {
+          if (cur.indexOf("user_") !== -1){
+            return {
+              ...acc,
+              user_info: {...acc.user_info, [cur]: _post[cur]},
+            }
+          }
+          return { ...acc, [cur]: _post[cur] };
+        },
+        { id: doc.id, user_info: {}}
+      )
+      dispatch(setPost([post]))
+    })
+  }
+}
+
+const removePostFB = (id) => {
+  return function(dispatch) {
+    const postDB = firestore.collection("post");
+    postDB.doc(id).delete().then(() => {
+      dispatch(removePost(id))
+      history.replace('/')
+    } )
   }
 }
 
@@ -153,6 +193,18 @@ export default handleActions(
         draft.paging = action.payload.paging;
       }
       draft.is_loading = false;
+    }),
+    [REMOVE_POST]: (state, action) => produce(state, (draft) => {
+      draft.list = state.list;
+      draft.list = draft.list.filter((r, idx) => {
+        if(r.id !== action.payload.id){
+          console.log(r.id)
+          return [...draft.list, r]
+        }
+      })
+    }),
+    [LOADING]: (state, action) => produce(state, (draft) => {
+      draft.is_loading = action.payload.is_loading;
     })
   },
   initialState
@@ -164,6 +216,9 @@ const actionCreators = {
   editPost,
   addPostFB,
   getPostFB,
+  getOnePostFB,
+  removePostFB,
+  removePost,
 }
 
 export {actionCreators}

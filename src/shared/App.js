@@ -6,6 +6,7 @@ import { history } from "../redux/configureStore";
 
 import PostList from "../pages/PostList";
 import PostWrite from "../pages/PostWrite"
+import PostDetail from "../pages/PostDetail";
 
 import Header from "../components/Header";
 import {Grid} from "../elements"
@@ -36,6 +37,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Route path="/" exact component={PostList} />
           <Route path="/upload" exact component={PostWrite} />
+          <Route path="/post/:id" exact component={PostDetail} />
         </ConnectedRouter>
       </Grid>
     </React.Fragment>
