@@ -26,6 +26,7 @@ const initialState = {
 }
 
 const initialPost = {
+  layout: "",
   image_url: "",
   contents: "",
   url: "",
@@ -41,11 +42,12 @@ const addPostFB = (post) => {
     const user_info = {
       user_name: _user.user_name,
       user_id: _user.uid,
-    }
+    };
 
     const _post = {
       ...initialPost,
       contents: post.contents,
+      layout: post.layout,
       url: post.url,
       name: post.name,
       insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
@@ -183,7 +185,6 @@ const editPostFB = (post_id = null, post) => {
     const _image = getState().image.preview;
     const _post_idx = getState().post.list.findIndex((p) => p.id === post_id);
     const _post = getState().post.list[_post_idx];
-
     const postDB = firestore.collection("post");
 
     if (_image === _post.image_url) {

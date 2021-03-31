@@ -45,27 +45,38 @@ const PostWrite = (props) => {
   }
 
   const addPost = () => {
+    if(!url || !contents || !name){
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ")
+      return
+    }
+
     let post ={
       url: url,
       contents: contents,
       name: name,
+      layout: selectedValue,
     }
+    console.log(post)
     dispatch(postActions.addPostFB(post));
   }
 
   const editPost = () => {
+    if(!url || !contents || !name){
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ")
+      return
+    }
+
     let post={
       url: url,
       contents: contents,
       name: name,
+      layout: selectedValue,
     }
     dispatch(postActions.editPostFB(post_id, post))
   }
   if (selectedValue==='a'){
 
-  }
   return(
-
      <WriteContainer>
       <h1 style={{textAlign: "center"}}>게시글 작성</h1>
       <div style={{marginLeft:"15px"}}>
@@ -137,8 +148,160 @@ const PostWrite = (props) => {
             }
       </BottomContainer>
      </WriteContainer>
-
-  )
+     )
+  }
+  if (selectedValue === 'b'){
+    return(
+      <WriteContainer>
+       <h1 style={{textAlign: "center"}}>게시글 작성</h1>
+       <TextContainer>
+         <TextField
+               id="standard-search"
+               label="프로젝트 이름"
+               type="text"
+               value={name}
+               style={{marginTop: "14px"}}
+               onChange = {changeName}
+             />
+         <TextField
+               id="standard-search"
+               label="프로젝트 URL"
+               value={url}
+               type="text"
+               style={{marginTop: "14px"}}
+               onChange = {changeUrl}
+             />
+         <TextField
+             id="outlined-multiline-static"
+             label="프로젝트 설명"
+             style={{margin: "24px 0"}}
+             onChange = {changeContents}
+             value={contents}
+             multiline
+             rows={4}
+             defaultValue=""
+             variant="outlined"/>
+       </TextContainer>
+       <div style={{marginLeft:"15px"}}>
+         <Upload/>
+       </div>
+       <WriteImg src={preview ? preview : "http://via.placeholder.com/400x300"} />
+ 
+       <BottomContainer>
+       <div style={{textAlign: "center"}} >
+         <Radio
+           checked={selectedValue === 'a'}
+           onChange={handleChange}
+           value="a"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'A' }}
+         />
+         <Radio
+           checked={selectedValue === 'b'}
+           onChange={handleChange}
+           value="b"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'B' }}
+         />
+         <Radio
+           checked={selectedValue === 'c'}
+           onChange={handleChange}
+           value="c"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'C' }}
+         />
+       </div>
+             {is_edit ? (
+               <Button variant="contained" color="primary" onClick={editPost}>
+                 글 수정
+               </Button>
+             ):(
+               <Button variant="contained" color="primary" onClick={addPost}>
+                 글 작성
+               </Button>
+             )
+             }
+       </BottomContainer>
+      </WriteContainer>
+      )
+  }
+  if (selectedValue === 'c'){
+    return(
+      <WriteContainer>
+       <h1 style={{textAlign: "center"}}>게시글 작성</h1>
+       <div style={{marginLeft:"15px"}}>
+         <Upload/>
+       </div>
+       <MiddleContainer>
+       <WriteImg src={preview ? preview : "http://via.placeholder.com/400x300"} style={{width: "50%"}} />
+       <TextContainer>
+         <TextField
+               id="standard-search"
+               label="프로젝트 이름"
+               type="text"
+               value={name}
+               style={{marginTop: "14px"}}
+               onChange = {changeName}
+             />
+         <TextField
+               id="standard-search"
+               label="프로젝트 URL"
+               value={url}
+               type="text"
+               style={{marginTop: "14px"}}
+               onChange = {changeUrl}
+             />
+         <TextField
+             id="outlined-multiline-static"
+             label="프로젝트 설명"
+             style={{margin: "24px 0"}}
+             onChange = {changeContents}
+             value={contents}
+             multiline
+             rows={4}
+             defaultValue=""
+             variant="outlined"/>
+       </TextContainer>
+       </MiddleContainer>
+ 
+       <BottomContainer>
+       <div style={{textAlign: "center"}} >
+         <Radio
+           checked={selectedValue === 'a'}
+           onChange={handleChange}
+           value="a"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'A' }}
+         />
+         <Radio
+           checked={selectedValue === 'b'}
+           onChange={handleChange}
+           value="b"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'B' }}
+         />
+         <Radio
+           checked={selectedValue === 'c'}
+           onChange={handleChange}
+           value="c"
+           name="radio-button-demo"
+           inputProps={{ 'aria-label': 'C' }}
+         />
+       </div>
+             {is_edit ? (
+               <Button variant="contained" color="primary" onClick={editPost}>
+                 글 수정
+               </Button>
+             ):(
+               <Button variant="contained" color="primary" onClick={addPost}>
+                 글 작성
+               </Button>
+             )
+             }
+       </BottomContainer>
+      </WriteContainer>
+      )
+  }
 }
 
 const WriteContainer = styled.div`
@@ -166,6 +329,7 @@ const TextContainer = styled.div`
   width: 60%;
   margin: auto;
   justify-content: space-between;
+  padding: 0px 15px;
 `
 
 const BottomContainer = styled.div`
@@ -175,5 +339,9 @@ const BottomContainer = styled.div`
   margin: auto;
   padding-bottom: 20px;
   justify-content: center;
+`
+
+const MiddleContainer = styled.div`
+  display: flex;
 `
 export default PostWrite;

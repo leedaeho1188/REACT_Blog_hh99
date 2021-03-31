@@ -13,47 +13,139 @@ const Post = (props) => {
   const dispatch = useDispatch()
   const {user_profile, _onClick ,like_cnt, comment_cnt, is_me} = props
 
-  return(
-    <React.Fragment>
-      <PostContainer>
-        <PostTop>
-          <div style={{display: "flex"}}>
-            <ProfileImg src={user_profile}/>
-            <UserName>{props.user_info.user_name}</UserName>
+  if(props.layout === 'a'){
+    return(
+      <React.Fragment>
+        <PostContainer>
+          <PostTop>
+            <div style={{display: "flex"}}>
+              <ProfileImg src={user_profile}/>
+              <UserName>{props.user_info.user_name}</UserName>
+            </div>
+            <div style={{display: "flex"}}>
+            <p>{props.insert_dt}</p>
+              {is_me && (
+              <PostBtn>
+                <Button color="secondary" style={{fontSize: '15px'}}
+                  onClick={() => {
+                    dispatch(postActions.removePostFB(props.id))
+                  }}>
+                  삭제
+                </Button>
+                <Button color="primary" style={{fontSize: '15px'}} 
+                  onClick={() => {
+                    history.push(`/write/${props.id}`)
+                  }}
+                >
+                  수정
+                </Button>
+                </PostBtn>
+                )}
+            </div>
+          </PostTop>
+          <PostImg src={props.image_url} onClick={_onClick} />
+          <PostBottom>
+            <FormControlLabel
+            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
+            style={{marginLeft: "8px"}}/>
+            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+          </PostBottom>
+          <PostLink href={props.url} target="_blank">{props.name}</PostLink>
+          <Contents>{props.contents}</Contents>
+        </PostContainer>
+      </React.Fragment>
+    )
+  }
+  if(props.layout === 'b'){
+    return(
+      <React.Fragment>
+        <PostContainer>
+          <PostTop>
+            <div style={{display: "flex"}}>
+              <ProfileImg src={user_profile}/>
+              <UserName>{props.user_info.user_name}</UserName>
+            </div>
+            <div style={{display: "flex"}}>
+            <p>{props.insert_dt}</p>
+              {is_me && (
+              <PostBtn>
+                <Button color="secondary" style={{fontSize: '15px'}}
+                  onClick={() => {
+                    dispatch(postActions.removePostFB(props.id))
+                  }}>
+                  삭제
+                </Button>
+                <Button color="primary" style={{fontSize: '15px'}} 
+                  onClick={() => {
+                    history.push(`/write/${props.id}`)
+                  }}
+                >
+                  수정
+                </Button>
+                </PostBtn>
+                )}
+            </div>
+          </PostTop>
+          <PostLink href={props.url} target="_blank">{props.name}</PostLink>
+          <Contents>{props.contents}</Contents>
+          <PostImg src={props.image_url} onClick={_onClick} />
+          <PostBottom>
+            <FormControlLabel
+            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
+            style={{marginLeft: "8px"}}/>
+            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+          </PostBottom>
+        </PostContainer>
+      </React.Fragment>
+    )
+  }
+  if(props.layout === 'c'){
+    return(
+      <React.Fragment>
+        <PostContainer>
+          <PostTop>
+            <div style={{display: "flex"}}>
+              <ProfileImg src={user_profile}/>
+              <UserName>{props.user_info.user_name}</UserName>
+            </div>
+            <div style={{display: "flex"}}>
+            <p>{props.insert_dt}</p>
+              {is_me && (
+              <PostBtn>
+                <Button color="secondary" style={{fontSize: '15px'}}
+                  onClick={() => {
+                    dispatch(postActions.removePostFB(props.id))
+                  }}>
+                  삭제
+                </Button>
+                <Button color="primary" style={{fontSize: '15px'}} 
+                  onClick={() => {
+                    history.push(`/write/${props.id}`)
+                  }}
+                >
+                  수정
+                </Button>
+                </PostBtn>
+                )}
+            </div>
+          </PostTop>
+          <div style={{display:"flex"}}>
+            <PostImgC src={props.image_url} onClick={_onClick} />
+          <div style={{width:"30%"}}>
+            <PostLink href={props.url} target="_blank">{props.name}</PostLink>
+            <Contents>{props.contents}</Contents>
           </div>
-          <div style={{display: "flex"}}>
-          <p>{props.insert_dt}</p>
-            {is_me && (
-            <PostBtn>
-              <Button color="secondary" style={{fontSize: '15px'}}
-                onClick={() => {
-                  dispatch(postActions.removePostFB(props.id))
-                }}>
-                삭제
-              </Button>
-              <Button color="primary" style={{fontSize: '15px'}} 
-                onClick={() => {
-                  history.push(`/write/${props.id}`)
-                }}
-              >
-                수정
-              </Button>
-              </PostBtn>
-              )}
           </div>
-        </PostTop>
-        <PostImg src={props.image_url} onClick={_onClick} />
-        <PostBottom>
-          <FormControlLabel
-          control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-          style={{marginLeft: "8px"}}/>
-          <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
-        </PostBottom>
-        <PostLink href={props.url} target="_blank">{props.name}</PostLink>
-        <Contents>{props.contents}</Contents>
-      </PostContainer>
-    </React.Fragment>
-  )
+          <PostBottom>
+            <FormControlLabel
+            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
+            style={{marginLeft: "8px"}}/>
+            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+          </PostBottom>
+        </PostContainer>
+      </React.Fragment>
+    )
+  }
 }
 
 Post.defaultProps = {
@@ -108,6 +200,13 @@ const PostBottom = styled.div`
 
 const PostImg = styled.img`
   width: 100%;
+  height: 500px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`
+
+const PostImgC = styled.img`
+  width: 70%;
   height: 500px;
   margin-bottom: 10px;
   cursor: pointer;
