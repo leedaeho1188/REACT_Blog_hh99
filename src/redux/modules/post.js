@@ -12,12 +12,16 @@ const ADD_POST = "ADD_POST";
 const REMOVE_POST = "REMOVE_POST";
 const EDIT_POST = "EDIT_POST";
 const LOADING = "LOADING";
+const EDIT_LIKE = "EDIT_LIKE"
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({ post_list, paging }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const removePost = createAction(REMOVE_POST, (id) => ({ id }))
 const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+const editLike = createAction(EDIT_LIKE, (post, post_id) => ({post, post_id}))
+
+
 
 const initialState = {
   list: [],
@@ -26,6 +30,8 @@ const initialState = {
 }
 
 const initialPost = {
+  like_cnt: 0,
+  like_id: [],
   layout: "",
   image_url: "",
   contents: "",
@@ -220,6 +226,25 @@ const editPostFB = (post_id = null, post) => {
   }
 }
 
+const editLikeFB = (post ,post_id) => {
+  return function (dispatch) {
+    const postDB = firestore.collection("post");
+    postDB.doc(post_id).update(post)
+          .then((doc) => {
+            dispatch(editLike(post, post_id))
+          })
+  }
+}
+
+// const removeLikeFB = (cnt, id, post_id)=> {
+//   return function (dipatch, getState) {
+//     const postDB = firestore.collection("post");
+//     const _post_idx = getState().post.list.findIndex((p) => p.id === post_id);
+//     const _post = getState().post.list[_post_idx];
+//     post.doc(post_id).update({})
+//   }
+// }
+
 export default handleActions(
   { 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
@@ -255,6 +280,10 @@ export default handleActions(
       let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
       draft.list[idx] = { ...draft.list[idx], ...action.payload.post }
     }),
+    [EDIT_LIKE]: (state, action) => produce(state, (draft) => {
+      let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+      draft.list[idx] = { ...draft.list[idx], ...action.payload.post }
+    }),
   },
   initialState
 )
@@ -269,6 +298,8 @@ const actionCreators = {
   removePostFB,
   editPostFB,
   removePost,
+  editLike,
+  editLikeFB,
 }
 
 export {actionCreators}

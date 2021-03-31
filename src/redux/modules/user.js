@@ -14,7 +14,10 @@ const getUser = createAction(GET_USER, (user)=>({user}))
 const setUser = createAction(SET_USER, (user)=> ({user}))
 
 const initialState = {
-  user: null,
+  user: {
+    user_name: null,
+    uid: null,
+  },
   is_login: false,
 };
 

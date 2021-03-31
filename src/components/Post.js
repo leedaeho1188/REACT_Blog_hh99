@@ -6,12 +6,52 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
 import {history} from "../redux/configureStore"
-import {useDispatch} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Post = (props) => {
-  const dispatch = useDispatch()
-  const {user_profile, _onClick ,like_cnt, comment_cnt, is_me} = props
+  const dispatch = useDispatch();
+  const {user_profile, _onClick ,like_cnt, is_me} = props;
+  const user_info = useSelector((state) => state.user.user);
+  const is_login = useSelector((state) => state.user.is_login)
+  const idx = props.like_id.findIndex((l) => l === user_info.uid);
+  const is_like = idx !== -1 ? true : false
+
+  const likeSubmit = () => {
+    if(!is_login){
+      window.alert("😀로그인 해야 할 수 있어요!")
+      return
+    }
+    let like_id;
+    if(props.like_id.length === 0){
+      like_id = [user_info.uid];
+    } else {
+      like_id = [...props.like_id, user_info.uid]; 
+    }
+    let cnt = props.like_cnt + 1;
+    
+    let post = {
+      like_cnt : cnt,
+      like_id : like_id
+    }
+    let post_id = props.id;
+    dispatch(postActions.editLikeFB(post, post_id))
+  }
+
+  const dislikeSubmit = () => {
+    let like_id = props.like_id.filter((l, idx) => {
+      if(l !== user_info.uid){
+        return [...like_id, l]
+      }
+    })
+    let cnt = props.like_cnt - 1;
+    let post = {
+      like_cnt : cnt,
+      like_id : like_id
+    }
+    let post_id = props.id;
+    dispatch(postActions.editLikeFB(post, post_id))
+  }
 
   if(props.layout === 'a'){
     return(
@@ -19,7 +59,6 @@ const Post = (props) => {
         <PostContainer>
           <PostTop>
             <div style={{display: "flex"}}>
-              <ProfileImg src={user_profile}/>
               <UserName>{props.user_info.user_name}</UserName>
             </div>
             <div style={{display: "flex"}}>
@@ -45,9 +84,9 @@ const Post = (props) => {
           </PostTop>
           <PostImg src={props.image_url} onClick={_onClick} />
           <PostBottom>
-            <FormControlLabel
-            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-            style={{marginLeft: "8px"}}/>
+            {is_like ? 
+            (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
+            <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
             <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
           </PostBottom>
           <PostLink href={props.url} target="_blank">{props.name}</PostLink>
@@ -62,7 +101,6 @@ const Post = (props) => {
         <PostContainer>
           <PostTop>
             <div style={{display: "flex"}}>
-              <ProfileImg src={user_profile}/>
               <UserName>{props.user_info.user_name}</UserName>
             </div>
             <div style={{display: "flex"}}>
@@ -90,9 +128,9 @@ const Post = (props) => {
           <Contents>{props.contents}</Contents>
           <PostImg src={props.image_url} onClick={_onClick} />
           <PostBottom>
-            <FormControlLabel
-            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-            style={{marginLeft: "8px"}}/>
+          {is_like ? 
+            (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
+            <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
             <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
           </PostBottom>
         </PostContainer>
@@ -105,7 +143,6 @@ const Post = (props) => {
         <PostContainer>
           <PostTop>
             <div style={{display: "flex"}}>
-              <ProfileImg src={user_profile}/>
               <UserName>{props.user_info.user_name}</UserName>
             </div>
             <div style={{display: "flex"}}>
@@ -137,9 +174,9 @@ const Post = (props) => {
           </div>
           </div>
           <PostBottom>
-            <FormControlLabel
-            control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-            style={{marginLeft: "8px"}}/>
+          {is_like ? 
+            (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
+            <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
             <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
           </PostBottom>
         </PostContainer>
@@ -149,15 +186,8 @@ const Post = (props) => {
 }
 
 Post.defaultProps = {
-  user_name: "Bradlee",
-  user_profile: "https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-  image_url: "https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-  contents: "리액트 기본주차 때 만든 Calendar 프로젝트입니다.",
-  project_url: "https://react-calendar-bradlee.web.app/",
-  comment_cnt: 10,
-  insert_dt: "2021-02-27 10:00:00",
   is_me: false,
-  like_cnt: 5,
+  is_like: false,
   _onClick: () => {},
 };
 
@@ -220,6 +250,18 @@ const PostLink = styled.a`
   &:hover {
     color: #4503fc;
     font-weight: 600;
+  }
+`
+const PostLike = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 20px;
+  margin-left: 8px;
+  border-radius: 20px;
+  &:hover {
+    background-color: #F9E9F4;
   }
 `
 
