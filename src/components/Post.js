@@ -31,7 +31,11 @@ const Post = (props) => {
                 }}>
                 삭제
               </Button>
-              <Button color="primary" style={{fontSize: '15px'}}>
+              <Button color="primary" style={{fontSize: '15px'}} 
+                onClick={() => {
+                  history.push(`/write/${props.id}`)
+                }}
+              >
                 수정
               </Button>
               </PostBtn>

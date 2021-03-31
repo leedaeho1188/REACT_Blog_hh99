@@ -36,7 +36,8 @@ function App() {
         <Header></Header>
         <ConnectedRouter history={history}>
           <Route path="/" exact component={PostList} />
-          <Route path="/upload" exact component={PostWrite} />
+          <Route path="/write" exact component={PostWrite} />
+          <Route path="/write/:id" exact component={PostWrite} />
           <Route path="/post/:id" exact component={PostDetail} />
         </ConnectedRouter>
       </Grid>

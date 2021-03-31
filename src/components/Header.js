@@ -45,7 +45,7 @@ const Header = (props) => {
           }} >⛵ h-log</HeaderBtn>
         <div>
           <HeaderBtn onClick={() => {
-            history.push("/upload")
+            history.push("/write")
         }}>NEWPOST</HeaderBtn>
           <HeaderBtn onClick={() => {
             dispatch(userActions.logoutFB())

@@ -174,6 +174,51 @@ const removePostFB = (id) => {
   }
 }
 
+const editPostFB = (post_id = null, post) => {
+  return function (dispatch, getState) {
+    if(!post_id){
+      console.log("게시물 정보가 없어요!");
+      return;
+    }
+    const _image = getState().image.preview;
+    const _post_idx = getState().post.list.findIndex((p) => p.id === post_id);
+    const _post = getState().post.list[_post_idx];
+
+    const postDB = firestore.collection("post");
+
+    if (_image === _post.image_url) {
+      postDB.doc(post_id).update(post).then((doc) => {
+        dispatch(editPost(post_id, post));
+        history.replace("/");
+      });
+      return
+    } else {
+      const user_id = getState().user.user.uid;
+      const _upload = storage
+        .ref(`image/${user_id}_${new Date().getTime()}`)
+        .putString(_image, "data_url");
+
+      _upload.then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((url) => {
+          return url
+        })
+        .then((url) => {
+          postDB.doc(post_id)
+                .update({ ...post, image_url: url })
+                .then((doc) => {
+                  dispatch(editPost(post_id, {...post, image_url: url}))
+                  history.replace("/")
+                })
+        })
+        .catch((err) => {
+          window.alert("이미지 업로드에 문제가 있습니다!")
+        })
+      })
+
+    }
+  }
+}
+
 export default handleActions(
   { 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
@@ -195,7 +240,6 @@ export default handleActions(
       draft.is_loading = false;
     }),
     [REMOVE_POST]: (state, action) => produce(state, (draft) => {
-      draft.list = state.list;
       draft.list = draft.list.filter((r, idx) => {
         if(r.id !== action.payload.id){
           console.log(r.id)
@@ -205,7 +249,11 @@ export default handleActions(
     }),
     [LOADING]: (state, action) => produce(state, (draft) => {
       draft.is_loading = action.payload.is_loading;
-    })
+    }),
+    [EDIT_POST]: (state, action) => produce(state, (draft) => {
+      let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+      draft.list[idx] = { ...draft.list[idx], ...action.payload.post }
+    }),
   },
   initialState
 )
@@ -218,6 +266,7 @@ const actionCreators = {
   getPostFB,
   getOnePostFB,
   removePostFB,
+  editPostFB,
   removePost,
 }
 
