@@ -31,7 +31,7 @@ function App() {
   })
 
   return (
-    <React.Fragment>
+    <div style={{background: "#FDFDFD"}}>
       <Grid>
         <Header></Header>
         <ConnectedRouter history={history}>
@@ -41,7 +41,7 @@ function App() {
           <Route path="/post/:id" exact component={PostDetail} />
         </ConnectedRouter>
       </Grid>
-    </React.Fragment>
+    </div>
   );
 }
 

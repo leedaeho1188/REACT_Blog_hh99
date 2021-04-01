@@ -37,7 +37,7 @@ const initialPost = {
   contents: "",
   url: "",
   name: "",
-  insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+  insert_dt: moment().format("YYYY-MM-DD HH:mm:ss"),
 }
 
 const addPostFB = (post) => {
@@ -56,7 +56,7 @@ const addPostFB = (post) => {
       layout: post.layout,
       url: post.url,
       name: post.name,
-      insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+      insert_dt: moment().format("YYYY-MM-DD HH:mm:ss"),
     };
     const _image = getState().image.preview;
 

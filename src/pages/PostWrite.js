@@ -308,6 +308,7 @@ const WriteContainer = styled.div`
   display: flex;
   width: 60vw;
   max-width: 750px;
+  background-color: white;
   justify-content: space-between;
   flex-direction: column;
   margin: auto;

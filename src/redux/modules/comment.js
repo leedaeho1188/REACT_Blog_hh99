@@ -44,14 +44,18 @@ const addCommentFB = (post_id, contents) => {
   }
 }
 
-const getCommentFB = (post_id = null) => {
+// const getCommentFB = (post_id = null) => {
 
-}
+// }
 
 export default handleActions(
   {
     [ADD_COMMENT]: (state, action) => produce(state, (draft) => {
-      state.list[action.payload.post_id] = [...state.list[action.payload.post_id], {...action.payload.comment}]
+      if(!draft.list[action.payload.post_id]){
+        draft.list[action.payload.post_id] = [action.payload.comment]
+        return
+      }
+      draft.list[action.payload.post_id].unshift(action.payload.comment);
     }),
   },
   initialState

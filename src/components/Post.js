@@ -1,7 +1,7 @@
 import React from "react";
 
 // import CommentWrite from "../components/CommentWrite"
-import Permit from "../shared/Permit";
+// import Permit from "../shared/Permit";
 
 import styled from "styled-components"
 import Button from '@material-ui/core/Button';
@@ -53,6 +53,29 @@ const Post = (props) => {
     dispatch(postActions.editLikeFB(post, post_id))
   }
 
+  const timeForToday = (value) => {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return '방금전';
+    if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
+
   if(props.layout === 'a'){
     return(
       <React.Fragment>
@@ -88,7 +111,7 @@ const Post = (props) => {
               <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
               <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
             </LikeContainer>
-            <p>{props.insert_dt}</p>
+            <p>{timeForToday(props.insert_dt)}</p>
           </PostBottom>
           <PostLink href={props.url} target="_blank">{props.name}</PostLink>
           <Contents>{props.contents}</Contents>
@@ -138,7 +161,7 @@ const Post = (props) => {
             <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
             <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
           </LikeContainer>
-          <p>{props.insert_dt}</p>
+          <p>{timeForToday(props.insert_dt)}</p>
           </PostBottom>
         </PostContainer>
       </React.Fragment>
@@ -175,7 +198,7 @@ const Post = (props) => {
           <div style={{display:"flex"}}>
           <PostImgC src={props.image_url} onClick={_onClick} />
           <div style={{width: '25%'}}>
-            <PostLink href={props.url} target="_blank" style={{marginLeft: "5px"}} >{props.name}</PostLink>
+            <PostLink href={props.url} target="_blank" style={{marginLeft: "12px"}} >{props.name}</PostLink>
             <ContentsC>{props.contents}</ContentsC>
           </div>
           </div>
@@ -186,7 +209,7 @@ const Post = (props) => {
             <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
             <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
           </LikeContainer>
-          <p>{props.insert_dt}</p>
+          <p>{timeForToday(props.insert_dt)}</p>
           </PostBottom>
         </PostContainer>
       </React.Fragment>
@@ -204,6 +227,7 @@ Post.defaultProps = {
 
 const PostContainer = styled.div`
   display: flex;
+  background-color: white;
   width: 60vw;
   max-width: 750px;
   justify-content: space-between;
@@ -241,7 +265,7 @@ const ContentsC= styled.p`
   white-space: normal;
   overflow: hidden;
   word-wrap: break-word;
-  margin-left: 5px;
+  margin-left: 12px;
 `
 
 const PostTop = styled.div`
@@ -288,10 +312,14 @@ const PostLink = styled.a`
   color: #037bfc;
   margin-left: 20px;
   margin-top: 5px;
+  white-space: normal;
+  overflow: hidden;
+  word-wrap: break-word;
   &:hover {
     color: #4503fc;
     font-weight: 600;
   }
+
 `
 const PostLike = styled.button`
   background-color: transparent;

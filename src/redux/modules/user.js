@@ -4,6 +4,7 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie"
 import { auth } from "../../shared/firebase";
 import { history } from "../configureStore";
 import firebase from "firebase/app";
+import Header from "../../components/Header"
 
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
@@ -35,7 +36,8 @@ const loginFB = (id, pwd) => {
               uid: user.user.uid,
             })
           )
-        }).catch((error) => {
+        }
+        ).catch((error) => {
           console.log(error.message)
         })
       });
@@ -106,8 +108,10 @@ export default handleActions(
     }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {
       deleteCookie("is_login");
-      draft.user = null;
+      draft.user.uid = null;
+      draft.user.user_name = null;
       draft.is_login = false;
+      draft.user.id = null
     })
   },
   initialState

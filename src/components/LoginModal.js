@@ -29,7 +29,7 @@ const LoginModal = ({status, close}) => {
       window.alert("이메일 형식이 맞지 않습니다!");
       return;
     }
-    dispatch(userActions.loginFB(id, pwd))
+    setTimeout(dispatch(userActions.loginFB(id, pwd)),1000)
     close()
   }
 
