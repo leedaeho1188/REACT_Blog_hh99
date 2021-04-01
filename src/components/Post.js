@@ -106,11 +106,9 @@ const Post = (props) => {
       <React.Fragment>
         <PostContainer>
           <PostTop>
+            <UserName>🚩 {props.user_info.user_name}</UserName>
+            
             <div style={{display: "flex"}}>
-              <UserName>{props.user_info.user_name}</UserName>
-            </div>
-            <div style={{display: "flex"}}>
-            <p>{props.insert_dt}</p>
               {is_me && (
               <PostBtn>
                 <Button color="secondary" style={{fontSize: '15px'}}
@@ -130,14 +128,17 @@ const Post = (props) => {
                 )}
             </div>
           </PostTop>
-          <PostLink href={props.url} target="_blank">{props.name}</PostLink>
+          <PostLink href={props.url} target="_blank" >{props.name}</PostLink>
           <Contents>{props.contents}</Contents>
           <PostImg src={props.image_url} onClick={_onClick} />
           <PostBottom>
-          {is_like ? 
+          <LikeContainer>
+            {is_like ? 
             (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
             <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
-            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+            <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
+          </LikeContainer>
+          <p>{props.insert_dt}</p>
           </PostBottom>
         </PostContainer>
       </React.Fragment>
@@ -149,10 +150,9 @@ const Post = (props) => {
         <PostContainer>
           <PostTop>
             <div style={{display: "flex"}}>
-              <UserName>{props.user_info.user_name}</UserName>
+              <UserName>🚩 {props.user_info.user_name}</UserName>
             </div>
             <div style={{display: "flex"}}>
-            <p>{props.insert_dt}</p>
               {is_me && (
               <PostBtn>
                 <Button color="secondary" style={{fontSize: '15px'}}
@@ -173,17 +173,20 @@ const Post = (props) => {
             </div>
           </PostTop>
           <div style={{display:"flex"}}>
-            <PostImgC src={props.image_url} onClick={_onClick} />
-          <div style={{width:"30%"}}>
-            <PostLink href={props.url} target="_blank">{props.name}</PostLink>
-            <Contents>{props.contents}</Contents>
+          <PostImgC src={props.image_url} onClick={_onClick} />
+          <div style={{width: '25%'}}>
+            <PostLink href={props.url} target="_blank" style={{marginLeft: "5px"}} >{props.name}</PostLink>
+            <ContentsC>{props.contents}</ContentsC>
           </div>
           </div>
           <PostBottom>
-          {is_like ? 
+          <LikeContainer>
+            {is_like ? 
             (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
             <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
-            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+            <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
+          </LikeContainer>
+          <p>{props.insert_dt}</p>
           </PostBottom>
         </PostContainer>
       </React.Fragment>
@@ -231,8 +234,16 @@ const Contents = styled.p`
   margin-left: 20px;
   white-space: initial;
   overflow: hidden;
-
 `
+
+const ContentsC= styled.p`
+  width: 100%;
+  white-space: normal;
+  overflow: hidden;
+  word-wrap: break-word;
+  margin-left: 5px;
+`
+
 const PostTop = styled.div`
   display: flex;
   text-align: center;
@@ -257,8 +268,8 @@ const PostImg = styled.img`
   height: 500px;
   margin-bottom: 10px;
   cursor: pointer;
-  @media (max-width: 750px){
-    height:
+  @media (max-width: 450px){
+    height: 350px;
   }
 `
 
@@ -267,6 +278,9 @@ const PostImgC = styled.img`
   height: 500px;
   margin-bottom: 10px;
   cursor: pointer;
+  @media (max-width: 450px){
+    height:350px;
+  }
 `
 
 const PostLink = styled.a`

@@ -82,6 +82,9 @@ const FlexContainer = styled.div`
   width: 100vw;
   margin: auto;
   box-sizing: border-box;
+  @media (max-width: 450px){
+    padding: 10px 10px
+  }
 `
 
 
@@ -96,6 +99,10 @@ const HeaderBtn = styled.button`
   &:hover {
     font-weight:600;
   };
+  @media (max-width: 450px){
+    font-size: 15px;
+    margin-right: 0px;
+  }
 `
 
 

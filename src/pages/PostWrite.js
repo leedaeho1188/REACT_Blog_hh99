@@ -78,7 +78,7 @@ const PostWrite = (props) => {
 
   return(
      <WriteContainer>
-      <h1 style={{textAlign: "center"}}>게시글 작성</h1>
+      <h2 style={{textAlign: "center"}}>게시글 작성</h2>
       <div style={{marginLeft:"15px"}}>
         <Upload/>
       </div>
@@ -153,7 +153,7 @@ const PostWrite = (props) => {
   if (selectedValue === 'b'){
     return(
       <WriteContainer>
-       <h1 style={{textAlign: "center"}}>게시글 작성</h1>
+       <h2 style={{textAlign: "center"}}>게시글 작성</h2>
        <TextContainer>
          <TextField
                id="standard-search"
@@ -228,12 +228,12 @@ const PostWrite = (props) => {
   if (selectedValue === 'c'){
     return(
       <WriteContainer>
-       <h1 style={{textAlign: "center"}}>게시글 작성</h1>
+       <h2 style={{textAlign: "center"}}>게시글 작성</h2>
        <div style={{marginLeft:"15px"}}>
          <Upload/>
        </div>
        <MiddleContainer>
-       <WriteImg src={preview ? preview : "http://via.placeholder.com/400x300"} style={{width: "50%"}} />
+       <WriteImgC src={preview ? preview : "http://via.placeholder.com/400x300"} style={{width: "50%"}} />
        <TextContainer>
          <TextField
                id="standard-search"
@@ -315,13 +315,34 @@ const WriteContainer = styled.div`
   margin-bottom: 30px;
   border-radius: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 2px 5px rgba(0,0,0,0.24);
+  @media (max-width: 750px){
+    width: 80vw;
+  }
+  @media (max-width: 450px){
+    width: 100vw;
+  }
 `
 
 const WriteImg = styled.img`
   width: 100%;
   height: 70vh;
   margin: 15px 0;
+  @media (max-width: 450px){
+    height: 50vh;
+  }
 `
+const WriteImgC = styled.img`
+  width: 100%;
+  height: 50vh;
+  margin: 15px 0;
+  @media (max-width: 750px){
+    height: 40vh;
+  }
+  @media (max-width: 450px){
+    height: 30vh;
+  }
+`
+
 
 const TextContainer = styled.div`
   display: flex;
