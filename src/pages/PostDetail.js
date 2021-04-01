@@ -1,6 +1,6 @@
 import React from "react";
 import Post from "../components/Post";
-
+import CommentWrite from "../components/CommentWrite"
 import Permit from "../shared/Permit";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -30,8 +30,10 @@ const PostDetail = (props) => {
           history.push(`/`);
         }}
         is_me={post.user_info.user_id === user_info?.uid}
+        is_detail
         />
       )}
+      
     </React.Fragment>
   )
 }

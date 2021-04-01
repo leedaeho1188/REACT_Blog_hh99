@@ -1,9 +1,9 @@
 import React from "react";
+
+// import CommentWrite from "../components/CommentWrite"
+import Permit from "../shared/Permit";
+
 import styled from "styled-components"
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import Favorite from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
 import {history} from "../redux/configureStore"
 import { useDispatch, useSelector } from "react-redux"
@@ -11,7 +11,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  const {user_profile, _onClick ,like_cnt, is_me} = props;
+  const {_onClick ,like_cnt, is_me, is_detail} = props;
   const user_info = useSelector((state) => state.user.user);
   const is_login = useSelector((state) => state.user.is_login)
   const idx = props.like_id.findIndex((l) => l === user_info.uid);
@@ -58,11 +58,9 @@ const Post = (props) => {
       <React.Fragment>
         <PostContainer>
           <PostTop>
+            <UserName>🚩 {props.user_info.user_name}</UserName>
             <div style={{display: "flex"}}>
-              <UserName>{props.user_info.user_name}</UserName>
-            </div>
-            <div style={{display: "flex"}}>
-            <p>{props.insert_dt}</p>
+            
               {is_me && (
               <PostBtn>
                 <Button color="secondary" style={{fontSize: '15px'}}
@@ -84,13 +82,21 @@ const Post = (props) => {
           </PostTop>
           <PostImg src={props.image_url} onClick={_onClick} />
           <PostBottom>
-            {is_like ? 
-            (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
-            <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
-            <div style={{marginRight: "14px"}}>Liked: {like_cnt}</div>
+            <LikeContainer>
+              {is_like ? 
+              (<PostLike style={{color: 'red'}} onClick={dislikeSubmit} >❤</PostLike>) : (
+              <PostLike style={{color: 'pink'}} onClick={likeSubmit}  >❤</PostLike>)}
+              <div style={{marginLeft: "15px"}}>좋아요: <span style={{fontWeight: "600"}}>{like_cnt}</span></div>
+            </LikeContainer>
+            <p>{props.insert_dt}</p>
           </PostBottom>
           <PostLink href={props.url} target="_blank">{props.name}</PostLink>
           <Contents>{props.contents}</Contents>
+          {/* {is_detail ? (
+            <Permit>
+              <CommentWrite post_id={props.id} />
+            </Permit>
+          ) : null} */}
         </PostContainer>
       </React.Fragment>
     )
@@ -189,6 +195,7 @@ Post.defaultProps = {
   is_me: false,
   is_like: false,
   _onClick: () => {},
+  is_detail: false,
 };
 
 
@@ -204,6 +211,12 @@ const PostContainer = styled.div`
   border-radius: 14px;
   padding-bottom : 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 2px 5px rgba(0,0,0,0.24);
+  @media (max-width: 750px){
+    width: 80vw;
+  }
+  @media (max-width: 450px){
+    width: 100vw;
+  }
 `
 
 const UserName = styled.p`
@@ -211,9 +224,14 @@ const UserName = styled.p`
   font-size: 15px;
   margin-left: 8px;
   align-self: center;
+  font-weight: 600;
 `
 const Contents = styled.p`
-  margin-left: 14px;
+  width: 90%;
+  margin-left: 20px;
+  white-space: initial;
+  overflow: hidden;
+
 `
 const PostTop = styled.div`
   display: flex;
@@ -226,6 +244,12 @@ const PostBottom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0 12px;
+`
+
+const LikeContainer = styled.div`
+  display: flex;
+  align-items: center
 `
 
 const PostImg = styled.img`
@@ -233,6 +257,9 @@ const PostImg = styled.img`
   height: 500px;
   margin-bottom: 10px;
   cursor: pointer;
+  @media (max-width: 750px){
+    height:
+  }
 `
 
 const PostImgC = styled.img`
@@ -245,7 +272,7 @@ const PostImgC = styled.img`
 const PostLink = styled.a`
   text-decoration: none;
   color: #037bfc;
-  margin-left: 14px;
+  margin-left: 20px;
   margin-top: 5px;
   &:hover {
     color: #4503fc;
@@ -258,7 +285,6 @@ const PostLike = styled.button`
   cursor: pointer;
   outline: none;
   font-size: 20px;
-  margin-left: 8px;
   border-radius: 20px;
   &:hover {
     background-color: #F9E9F4;
