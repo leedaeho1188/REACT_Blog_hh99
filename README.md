@@ -53,6 +53,7 @@
 <img width="500" src="https://blog.kakaocdn.net/dn/bk1YNm/btq1R9gFvik/n5HaY9c8fF4OwB5M2xcr61/img.png">
 
 <img width="500" src="https://blog.kakaocdn.net/dn/BDrsS/btq1KBZ3ScK/TbJUDcfcQNS5rq3AZ3M150/img.png">
+
 ```
 const loginFB = (id, pwd) => {
   return function (dispatch, getState){
@@ -125,6 +126,8 @@ const signupFB = (id, pwd, user_name) => {
 <div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/bg2nvo/btq1R8B5VsE/AFRSwi1Trt0GK3EIeIiKN0/img.png">
+
+<br>
 
  **preview 기능**을 구현하는 함수입니다.
 
@@ -245,7 +248,9 @@ const addPostFB = (post) => {
 
 <details>
 <summary>여기를 눌러주세요</summary>
-<div markdown="1">       
+<div markdown="1">     
+
+<br>
 
 **무한스크롤** 구현 함수 코드
 
@@ -364,6 +369,8 @@ const getPostFB = (start = null, size = 3) => {
 <summary>여기를 눌러주세요</summary>
 <div markdown="1">       
 
+<br>
+
 **좋아요 함수와 좋아요 취소 함수** 코드입니다.
 
 ```
@@ -427,6 +434,8 @@ const is_like = idx !== -1 ? true : false
 <div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/bRYqPi/btq1KCdGze0/r7Ll7v7mahJ3Jl4I3N5F80/img.png">
+
+<br>
 
 게시물 **수정 & 삭제** post module 코드입니다.
 
