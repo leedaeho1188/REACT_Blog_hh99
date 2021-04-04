@@ -12,6 +12,8 @@
 
 **페이지 링크:** [REACT_Blog](https://react-blog-hh99.web.app/)
 
+**Youtube 링크:** [REACT_Blog 항해99](https://youtu.be/PTaWfZlSPRs/)
+
 <br>
 
 ## <느낀점>
