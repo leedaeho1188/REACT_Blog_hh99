@@ -1,3 +1,5 @@
+<img width="500" src="https://blog.kakaocdn.net/dn/dkjJsx/btq1BxKnuFQ/sTELvaUHNgfLx80E8K9Y4K/img.png">
+
 # REACT\_Blog
 
 항해99 5주차는 리액트 심화 내용들을 주어진 강의를 들으면서 공부하고, 공부한 내용을 바탕으로 프로젝트를 완성시켰습니다. 프로젝트는 매운맛과 순한맛이 있었는데, 이왕 하는거 매운맛으로 했습니다. 🌶
@@ -7,6 +9,8 @@
 ## <느낀점>
 
 2주가 이렇게 길수가 있었던가?? 주특기를 배우는 2주는 마치 2달 같았다. 이번주는 리액트 심화과정이였는데, **기본 주차 배운것을 기반으로 좀더 많은 기능들을 구현해볼 수 있는 주차였던 것 같다.** 제공된 강의 시간 만 무려 15시간이 넘었고 그것을 2일만에 다 듣고 프로젝트를 하는것이 좀 힘들었다..ㅜ 그래도 열심히 하니까 어느정도 따라갈 수 있었다. 기본 주차 때 개념들을 이해하고 올라온게 많은 도움이 됬던 것 같다. 전 주에 다루는 데이터 양도 훨씬 많아지고, 파일 수도 5배는 더 많아졌다. 양이 많다보니 저번주처럼 배운내용을 머리에 다 넣기가 힘들었는데, 오늘 **이렇게 한 주를 돌아보며 배운것들을 정리하니까 좀 머리에 정리가 되는 것 같아서 다행이다.😀** 
+
+<br>
 
 이번주는 저번주보다는 사람들을 많이 도와주지는 못했던것 같다. 사람들이 잘 안물어본것도 있고, 나도 공부량이 너무 많아서 알려주는게 한계가 있었다. 도움을 청하는데 나도 해야될게 쌓여있으면 참 마음이 불편했다...ㅜ 안 도와주면 미안하고 도와주면 마음이 더 조급해지고.. 근데 지금 생각해보면 내가 아는거면 도와주는게 맞다고 생각한다. **좀더 마음에 여유를 가지고 항해99를 진행 했으면 한다.** 다른 사람이 나보다 잘한다고 마음 조급해하지 말고 나는 내 속도에 맞게 목표를 가지고 차분하게 공부해나갔으면 좋겠다. 민영튜터님이 이런말씀을 해주셨다. 개발을 할 때는 어려운 상황이 닦치면 더 침착해져야 된다고 하셨다. 그래야 두뇌회전이 잘되고 문제를 해결할 수 있다고 하셨다. **침착하고 차분하게 문제를 해결해나가는 그런 개발자가 되고싶다.** **2주동안 최선을 다해서 도와주신 민영튜터님한테 정말 감사드린다!😄**
 
@@ -44,10 +48,9 @@
 
 더보기
 
-[##_Image|kage@bk1YNm/btq1R9gFvik/n5HaY9c8fF4OwB5M2xcr61/img.png|alignCenter|data-filename="스크린샷(52).png" data-origin-width="1039" data-origin-height="935" width="552" height="NaN" data-ke-mobilestyle="widthContent"|회원가입 모달||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/bk1YNm/btq1R9gFvik/n5HaY9c8fF4OwB5M2xcr61/img.png">
 
-[##_Image|kage@BDrsS/btq1KBZ3ScK/TbJUDcfcQNS5rq3AZ3M150/img.png|alignCenter|data-filename="스크린샷(53).png" data-origin-width="870" data-origin-height="786" width="480" height="NaN" data-ke-mobilestyle="widthContent"|로그인 모달||_##]
-
+<img width="500" src="https://blog.kakaocdn.net/dn/BDrsS/btq1KBZ3ScK/TbJUDcfcQNS5rq3AZ3M150/img.png">
 ```
 const loginFB = (id, pwd) => {
   return function (dispatch, getState){
@@ -112,7 +115,7 @@ const signupFB = (id, pwd, user_name) => {
 
 더보기
 
-[##_Image|kage@bg2nvo/btq1R8B5VsE/AFRSwi1Trt0GK3EIeIiKN0/img.png|alignCenter|width="557" height="NaN" data-filename="스크린샷(56).png" data-origin-width="876" data-origin-height="975" data-ke-mobilestyle="widthContent"|게시물 작성 페이지||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/bg2nvo/btq1R8B5VsE/AFRSwi1Trt0GK3EIeIiKN0/img.png">
 
  **preview 기능**을 구현하는 함수입니다.
 
@@ -209,11 +212,11 @@ const addPostFB = (post) => {
 
 더보기
 
-[##_Image|kage@kKFVj/btq1KBltLIP/Br3B5BKUkPmN14K9QNy1Q0/img.png|alignCenter|width="554" height="NaN" data-filename="스크린샷(61).png" data-origin-width="1022" data-origin-height="936" data-ke-mobilestyle="widthContent"|레이아웃 옵션 a||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/kKFVj/btq1KBltLIP/Br3B5BKUkPmN14K9QNy1Q0/img.png">
 
-[##_Image|kage@bqf2WW/btq1JV5K3i5/kFR6QUhnoK7hDbtOJW1PV0/img.png|alignCenter|width="552" height="NaN" data-filename="스크린샷(60).png" data-origin-width="1032" data-origin-height="941" data-ke-mobilestyle="widthContent"|레이아웃 옵션 b||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/bqf2WW/btq1JV5K3i5/kFR6QUhnoK7hDbtOJW1PV0/img.png">
 
-[##_Image|kage@2yiH9/btq1MpSo43A/JemsjOn2OmiY7Y9aOfKto0/img.png|alignCenter|data-filename="스크린샷(62).png" data-origin-width="1023" data-origin-height="816" width="604" height="NaN" data-ke-mobilestyle="widthContent"|레이아웃 옵션 c||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/2yiH9/btq1MpSo43A/JemsjOn2OmiY7Y9aOfKto0/img.png">
 
 #### **4\. 게시글 메인 페이지 만들기**
 
@@ -386,7 +389,7 @@ const is_like = idx !== -1 ? true : false
 
 더보기
 
-[##_Image|kage@bRYqPi/btq1KCdGze0/r7Ll7v7mahJ3Jl4I3N5F80/img.png|alignCenter|width="567" height="NaN" data-filename="스크린샷(66).png" data-origin-width="1032" data-origin-height="821" data-ke-mobilestyle="widthContent"|디테일 페이지||_##]
+<img width="500" src="https://blog.kakaocdn.net/dn/bRYqPi/btq1KCdGze0/r7Ll7v7mahJ3Jl4I3N5F80/img.png">
 
 게시물 **수정 & 삭제** post module 코드입니다.
 
