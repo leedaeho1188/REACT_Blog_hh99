@@ -1,8 +1,16 @@
-<img width="500" src="https://blog.kakaocdn.net/dn/dkjJsx/btq1BxKnuFQ/sTELvaUHNgfLx80E8K9Y4K/img.png">
+
 
 # REACT\_Blog
 
+<img width="500" src="https://blog.kakaocdn.net/dn/dkjJsx/btq1BxKnuFQ/sTELvaUHNgfLx80E8K9Y4K/img.png">
+
+<br>
+
 항해99 5주차는 리액트 심화 내용들을 주어진 강의를 들으면서 공부하고, 공부한 내용을 바탕으로 프로젝트를 완성시켰습니다. 프로젝트는 매운맛과 순한맛이 있었는데, 이왕 하는거 매운맛으로 했습니다. 🌶
+
+<br>
+
+**페이지 링크:** [REACT_Blog](https://react-blog-hh99.web.app/)
 
 <br>
 
