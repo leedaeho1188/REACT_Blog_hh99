@@ -46,7 +46,9 @@
 
 로그인 회원가입은 모달로 만들었습니다. 회원가입을 할 때 **firebase Authentication**에다가 아이디, 패스워드, 유저 이름을 저장했습니다. 로그인을 할 때는 firebase에 해당 id와 password값이 맞는게 있으면 **Session\_Storage**에 세션 값이 저장되고 redux store에도 해당 유저 정보가 저장이 됩니다. 그래서 로그인을 했을 때 헤더에 로그이 회원가입이 더이상 뜨지 않고, 게시물 작성과 로그아웃 버튼이 보입니다. 로그인을 했는지 않했는지는 Session Storage에 값이있고 redux store에 **is\_login**이 true인지 확인을 했습니다.
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/bk1YNm/btq1R9gFvik/n5HaY9c8fF4OwB5M2xcr61/img.png">
 
@@ -105,6 +107,11 @@ const signupFB = (id, pwd, user_name) => {
 }
 ```
 
+</div>
+</details>
+
+
+
 <br>
 
 ### **2\. 게시글 작성 페이지 만들기**
@@ -113,7 +120,9 @@ const signupFB = (id, pwd, user_name) => {
 
 다른 데이터들은 작성한 값들을 **firestore**에 저장합니다. 저장할 때는 게시물을 작성한 시간 값도 넣어줍니다. 한가지 더 추가하자면 이미지파일은 firestore말고 **storage**에 저장을 하고 저장된 파일 값을 **url주소**로 바꾼다음에 게시물 데이터에 저장합니다.
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/bg2nvo/btq1R8B5VsE/AFRSwi1Trt0GK3EIeIiKN0/img.png">
 
@@ -204,13 +213,20 @@ const addPostFB = (post) => {
 }
 ```
 
+</div>
+</details>
+
+
+
 <br>
 
 ### **3\. 게시글 레이아웃 옵션 주기**
 
 프로젝트 필수 기능중 하나가 게시물 레이아웃 옵션 3개를 주어서 사용자들이 선택할 수 있게 하는것이였습니다. **라디오 버튼**을 사용해서 **useState**로 값이 변할 때마다 해당 값을 받아주고 그 값에 맞는 레이아웃이 화면에 보여지게 했습니다. 레이아웃 값도 firestore와 리덕스에 저장했습니다.
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/kKFVj/btq1KBltLIP/Br3B5BKUkPmN14K9QNy1Q0/img.png">
 
@@ -218,11 +234,18 @@ const addPostFB = (post) => {
 
 <img width="500" src="https://blog.kakaocdn.net/dn/2yiH9/btq1MpSo43A/JemsjOn2OmiY7Y9aOfKto0/img.png">
 
+</div>
+</details>
+
+
+
 ### **4\. 게시글 메인 페이지 만들기**
 
 작성한 게시글들을 나열해놓는 메인 페이지를 구현했습니다. firestore에서 게시물 데이터들을 가지고 올 때 게시물 작성 데이터들 중에 작성한 날짜가 늦은 순으로 데이터를 뽑아내고 map을 이용해서 나열했습니다. 메인 페이지에서는 **무한 스크롤링**을 구현했습니다. 그래서 db에있는 모든 게시물 데이터를 가져오는것이아니라 n개씩만 가져와서 스크롤이 어느정도 밑으로 내려같을 때 그 다음 게시물 n개를 가져왔습니다. 다음에 나와야될 게시물이 어떤건지 아는 방법은 게시물을 n+1개를 먼저 가져오고 불러온 데이터에서 마지막 데이터가 다음에 나올 데이터들 중에서 첫번째 데이터로 세팅을하고 그 다음부터 나오게하면 됩니다. 
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 **무한스크롤** 구현 함수 코드
 
@@ -326,13 +349,20 @@ const getPostFB = (start = null, size = 3) => {
 }
 ```
 
+</div>
+</details>
+
+
+
 <br>
 
 ### **5\. 게시글 좋아요 기능 구현하기**
 
 좋아요 기능은 사용자가 로그인을 했을 때 사용할 수 있게 했습니다. 로그인을 한 사용자가 한 게시물의 하트 버튼을 눌렀을 때 핑크색이였던 하트버튼을 사라지게 하고 빨간색 버튼이 보여지게 했습니다. **삼항 연산자**를 사용해서 구현했습니다. 그리고 **findIndex**를 사용해서 사용자가 해당 포스트에 좋아요를 눌렀는지 안눌렀는지 확이했습니다. 좋아요 기능은 각각에 게시물에 좋아요를 누른 사용자 id 값을 배열안에 저장을 하고 좋아요 함수와 좋아요 취소 함수를 만들어서 기능을 구현했습니다. 
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 **좋아요 함수와 좋아요 취소 함수** 코드입니다.
 
@@ -381,13 +411,20 @@ const idx = props.like_id.findIndex((l) => l === user_info.uid);
 const is_like = idx !== -1 ? true : false
 ```
 
+</div>
+</details>
+
+
+
 <br>
 
 ### **6\. 게시글 디테일 페이지 만들기(수정하기 & 삭제하기)**
 
 게시글 디테일 페이지는 게시글 사진을 눌렀을 때 해당 게시글 id값을 가진 주소로 만들어집니다. 디테일 페이지로 넘어가면 **해당 게시물을 작성한 사람만 수정하기 삭제하기 버튼**을 볼 수 있습니다. 수정하기 버튼을 누르면 게시물 작성페이지에서  게시글 id값이 추가된 주소로 넘어갑니다. 이제 그 페이지에서 게시글을 수정 할 수 있습니다. 삭제 버튼을 누르면 말그대로 게시글 데이터가 firestore에서 그리고 리덕스에서 삭제가됩니다.
 
-더보기
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 <img width="500" src="https://blog.kakaocdn.net/dn/bRYqPi/btq1KCdGze0/r7Ll7v7mahJ3Jl4I3N5F80/img.png">
 
@@ -448,3 +485,8 @@ const editPostFB = (post_id = null, post) => {
   }
 }
 ```
+
+</div>
+</details>
+
+
