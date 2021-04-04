@@ -13,7 +13,7 @@ import {Grid} from "../elements"
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-
+import styled from "styled-components"
 import { apiKey } from "./firebase";
 
 
@@ -31,7 +31,7 @@ function App() {
   })
 
   return (
-    <div style={{background: "#FDFDFD"}}>
+    <AppContainer>
       <Grid>
         <Header></Header>
         <ConnectedRouter history={history}>
@@ -41,9 +41,14 @@ function App() {
           <Route path="/post/:id" exact component={PostDetail} />
         </ConnectedRouter>
       </Grid>
-    </div>
+    </AppContainer>
   );
 }
 
+
+const AppContainer = styled.div`
+  overflow: hidden;
+  background: #FDFDFD;
+`
 
 export default App;
